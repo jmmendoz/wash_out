@@ -42,17 +42,17 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
   end
 
   xml.tag! "wsdl:binding", :name => "#{@name}_binding", :type => "tns:#{@name}_port" do
-    xml.tag! "soap12:binding", :style => 'document', :transport => 'http://schemas.xmlsoap.org/soap/http'
+    xml.tag! "soap:binding", :style => 'document', :transport => 'http://schemas.xmlsoap.org/soap/http'
     @map.keys.each do |operation|
       xml.tag! "wsdl:operation", :name => operation do
-        xml.tag! "soap12:operation", :soapAction => operation
+        xml.tag! "soap:operation", :soapAction => operation
         xml.tag! "wsdl:input" do
-          xml.tag! "soap12:body",
+          xml.tag! "soap:body",
             :use => "literal",
             :namespace => @namespace
         end
         xml.tag! "wsdl:output" do
-          xml.tag! "soap12:body",
+          xml.tag! "soap:body",
             :use => "literal",
             :namespace => @namespace
         end
@@ -62,7 +62,7 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
 
   xml.tag! "wsdl:service", :name => @service_name do
     xml.tag! "wsdl:port", :name => "#{@name}_port", :binding => "tns:#{@name}_binding" do
-      xml.tag! "soap12:address", :location => WashOut::Router.url(request, @name)
+      xml.tag! "soap:address", :location => WashOut::Router.url(request, @name)
     end
   end
 end
