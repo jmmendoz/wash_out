@@ -2,7 +2,7 @@ xml.instruct!
 xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
                 'xmlns:tns' => @namespace,
                 'xmlns:soap' => 'http://schemas.xmlsoap.org/wsdl/soap/',
-                'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
+                'xmlns:s' => 'http://www.w3.org/2001/XMLSchema',
                 'xmlns:soap-enc' => 'http://schemas.xmlsoap.org/soap/encoding/',
                 'xmlns:wsdl' => 'http://schemas.xmlsoap.org/wsdl/',
                 'name' => @name,
@@ -22,12 +22,12 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
   @map.each do |operation, formats|
     xml.tag! "wsdl:message", :name => "#{operation}" do
       formats[:in].each do |p|
-        xml.tag! "wsdl:part", wsdl_occurence(p, true, :name => p.name, :type => p.namespaced_type)
+        xml.tag! "wsdl:part", wsdl_occurence(p, false, :name => p.name, :type => p.namespaced_type)
       end
     end
     xml.tag! "wsdl:message", :name => formats[:response_tag] do
       formats[:out].each do |p|
-        xml.tag! "wsdl:part", wsdl_occurence(p, true, :name => p.name, :type => p.namespaced_type)
+        xml.tag! "wsdl:part", wsdl_occurence(p, false, :name => p.name, :type => p.namespaced_type)
       end
     end
   end
