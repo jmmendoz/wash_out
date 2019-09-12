@@ -11,13 +11,14 @@ module WashOut
 
     # Defines a WSDL parameter with name +name+ and type specifier +type+.
     # The type specifier format is described in #parse_def.
-    def initialize(soap_config, name, type, multiplied = false)
+    def initialize(soap_config, name, type, multiplied = false, optional = false)
       type ||= {}
       @soap_config = soap_config
       @name       = name.to_s
       @raw_name   = name.to_s
       @map        = {}
       @multiplied = multiplied
+      @optional = optional
 
       if soap_config.camelize_wsdl.to_s == 'lower'
         @name = @name.camelize(:lower)

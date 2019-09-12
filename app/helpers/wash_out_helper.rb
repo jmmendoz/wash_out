@@ -102,10 +102,13 @@ module WashOutHelper
   end
 
   def wsdl_occurence(param, inject, extend_with = {})
-    if inject
-      data = { "minOccurs" => 0, "maxOccurs" => 1 }
+    if inject && param.optional
+      data = { "minOccurs" => 0}
     else
       data = {}
+    end
+    if inject && !param.multiplied
+      data["maxOccurs"] = 1
     end
     extend_with.merge(data)
   end
