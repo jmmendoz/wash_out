@@ -5,6 +5,7 @@ module WashOut
     attr_accessor :map
     attr_accessor :type
     attr_accessor :multiplied
+    attr_accessor :optional
     attr_accessor :value
     attr_accessor :source_class
     attr_accessor :soap_config
@@ -161,7 +162,7 @@ module WashOut
     end
 
     def flat_copy
-      copy = self.class.new(@soap_config, @name, @type.to_sym, @multiplied)
+      copy = self.class.new(@soap_config, @name, @type.to_sym, @multiplied, @optional)
       copy.raw_name = raw_name
       copy.source_class = source_class
       copy
