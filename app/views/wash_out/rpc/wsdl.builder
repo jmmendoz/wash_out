@@ -2,7 +2,7 @@ xml.instruct!
 xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
                 'xmlns:tns' => @namespace,
                 'xmlns:soap' => 'http://schemas.xmlsoap.org/wsdl/soap/',
-                'xmlns:s' => 'http://www.w3.org/2001/XMLSchema',
+                'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
                 'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
                 'xmlns:soap-enc' => 'http://schemas.xmlsoap.org/soap/encoding/',
                 'xmlns:wsdl' => 'http://schemas.xmlsoap.org/wsdl/',
