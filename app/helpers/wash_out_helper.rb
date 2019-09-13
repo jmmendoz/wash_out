@@ -108,6 +108,7 @@ module WashOutHelper
       data = { "minOccurs" => 1 }
     end
     if inject && param.multiplied
+      data = { "minOccurs" => 0 }
       data["maxOccurs"] = "unbounded"
     end
     extend_with.merge(data)
