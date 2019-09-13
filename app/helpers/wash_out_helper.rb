@@ -102,7 +102,7 @@ module WashOutHelper
   end
 
   def wsdl_occurence(param, inject, extend_with = {})
-    if inject && param.optional
+    if !inject || param.optional
       data = {}
     else
       data = { "minOccurs" => 1 }
