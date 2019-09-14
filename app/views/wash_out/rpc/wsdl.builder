@@ -9,7 +9,7 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
                 'name' => @name,
                 'targetNamespace' => @namespace do
   xml.types do
-    xml.tag! "schema", :targetNamespace => @namespace, :xmlns => 'http://www.w3.org/2001/XMLSchema' do
+    xml.tag! "xsd:schema", :targetNamespace => @namespace, :xmlns => 'http://www.w3.org/2001/XMLSchema' do
       defined = []
       @map.each do |operation, formats|
         (formats[:in] + formats[:out]).each do |p|
