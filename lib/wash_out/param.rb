@@ -151,7 +151,11 @@ module WashOut
           if opt.is_a? WashOut::Param
             opt
           elsif opt.is_a? Array
-            WashOut::Param.new(soap_config, name, opt[0], true)
+            if opt.size == 3
+              WashOut::Param.new(soap_config, name, opt[0], opt[1], opt[2])
+            else
+              WashOut::Param.new(soap_config, name, opt[0], true)
+            end
           else
             WashOut::Param.new(soap_config, name, opt)
           end
