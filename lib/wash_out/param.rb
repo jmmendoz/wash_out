@@ -5,19 +5,21 @@ module WashOut
     attr_accessor :map
     attr_accessor :type
     attr_accessor :multiplied
+    attr_accessor :optional
     attr_accessor :value
     attr_accessor :source_class
     attr_accessor :soap_config
 
     # Defines a WSDL parameter with name +name+ and type specifier +type+.
     # The type specifier format is described in #parse_def.
-    def initialize(soap_config, name, type, multiplied = false)
+    def initialize(soap_config, name, type, multiplied = false, optional = false)
       type ||= {}
       @soap_config = soap_config
       @name       = name.to_s
       @raw_name   = name.to_s
       @map        = {}
       @multiplied = multiplied
+      @optional = optional
 
       if soap_config.camelize_wsdl.to_s == 'lower'
         @name = @name.camelize(:lower)
@@ -113,7 +115,7 @@ module WashOut
 
     # Returns a WSDL namespaced identifier for this type.
     def namespaced_type
-      struct? ? "tns:#{basic_type}" : "s:#{xsd_type}"
+      struct? ? "tns:#{basic_type}" : "xsd:#{xsd_type}"
     end
 
     # Parses a +definition+. The format of the definition is best described
@@ -149,7 +151,11 @@ module WashOut
           if opt.is_a? WashOut::Param
             opt
           elsif opt.is_a? Array
-            WashOut::Param.new(soap_config, name, opt[0], true)
+            if opt.size == 3
+              WashOut::Param.new(soap_config, name, opt[0], opt[1], opt[2])
+            else
+              WashOut::Param.new(soap_config, name, opt[0], true)
+            end
           else
             WashOut::Param.new(soap_config, name, opt)
           end
@@ -160,7 +166,7 @@ module WashOut
     end
 
     def flat_copy
-      copy = self.class.new(@soap_config, @name, @type.to_sym, @multiplied)
+      copy = self.class.new(@soap_config, @name, @type.to_sym, @multiplied, @optional)
       copy.raw_name = raw_name
       copy.source_class = source_class
       copy

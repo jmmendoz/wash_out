@@ -1,3 +1,3 @@
 module WashOut
-  VERSION = "0.12.7"
+  VERSION = "0.12.20"
 end

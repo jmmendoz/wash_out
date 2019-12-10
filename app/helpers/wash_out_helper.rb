@@ -66,7 +66,7 @@ module WashOutHelper
 
     if param.struct?
       if !defined.include?(param.basic_type)
-        xml.tag! "s:complexType", :name => param.basic_type do
+        xml.tag! "xsd:complexType", :name => param.basic_type do
           attrs, elems = [], []
           param.map.each do |value|
             more << value if value.struct?
@@ -78,15 +78,15 @@ module WashOutHelper
           end
 
           if elems.any?
-            xml.tag! "s:sequence" do
+            xml.tag! "xsd:sequence" do
               elems.each do |value|
-                xml.tag! "s:element", wsdl_occurence(value, true, :name => value.name, :type => value.namespaced_type)
+                xml.tag! "xsd:element", wsdl_occurence(value, true, :name => value.name, :type => value.namespaced_type)
               end
             end
           end
 
           attrs.each do |value|
-            xml.tag! "s:attribute", wsdl_occurence(value, true, :name => value.attr_name, :type => value.namespaced_type)
+            xml.tag! "xsd:attribute", wsdl_occurence(value, true, :name => value.attr_name, :type => value.namespaced_type)
           end
         end
 
@@ -102,10 +102,17 @@ module WashOutHelper
   end
 
   def wsdl_occurence(param, inject, extend_with = {})
-    if inject
-      data = { "minOccurs" => 0, "maxOccurs" => 1 }
-    else
-      data = {}
+    if !inject
+      data = {} 
+    elsif param.optional
+      data = { "minOccurs" => 0 }
+    else 
+      data = { "minOccurs" => 1 }
+    end
+    if inject && param.multiplied
+      data["maxOccurs"] = "unbounded"
+    elsif inject
+      data["maxOccurs"] = 1
     end
     extend_with.merge(data)
   end

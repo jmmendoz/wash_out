@@ -74,8 +74,9 @@ module WashOut
     def _generate_wsdl
       @map          = self.class.soap_actions
       @namespace    = soap_config.namespace
-      @name         = controller_path
+      @name         = soap_config.name
       @service_name = soap_config.service_name
+      @controller_path = controller_path
 
       render :template => "wash_out/#{soap_config.wsdl_style}/wsdl", :layout => false,
              :content_type => 'text/xml'
