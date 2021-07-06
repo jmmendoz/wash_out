@@ -42,7 +42,6 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
   end
 
   xml.binding :name => "#{@name}_binding", :type => "tns:#{@name}_port" do
-    xml.tag! "soap:binding", :style => 'rpc', :transport => 'http://schemas.xmlsoap.org/soap/http'
     @map.keys.each do |operation|
       xml.operation :name => operation do
         xml.tag! "soap:operation", :soapAction => operation
